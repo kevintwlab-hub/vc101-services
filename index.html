@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kevin | Avalotech — 工業安全科技專家</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // ITRI Brand Palette (applied)
+                        techBlue: '#00A0E9',       // 科技藍
+                        techBlueDark: '#005BAB',   // 深藍
+                        techNavy: '#003056',       // 鯨藍
+                        techPurple: '#6F63C6',     // 智慧紫
+                        techGreen: '#7DDE4C',      // 永續綠
+                        techTeal: '#00B3B3',       // 青綠
+                        itriYellow: '#FFC72C',     // 能量黃
+                        itriRed: '#E60012',        // 熱情紅
+                        itriOrange: '#FF8A00',     // 活力橘
+                        itriPink: '#E83E8C',       // 創新粉
+
+                        // Neutral scale
+                        neutral900: '#212121',
+                        neutral700: '#424242',
+                        neutral500: '#757575',
+                        neutral300: '#BDBDBD',
+                        neutral100: '#F2F4F7',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'SF Pro Display', 'PingFang TC', 'Microsoft JhengHei', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        // Preview toggle for social badge variants
+        document.addEventListener('DOMContentLoaded', () => {
+            const badges = document.querySelectorAll('.social-badge');
+            // Set Variant A as default on load
+            badges.forEach(b => { b.classList.add('variant-a'); });
+            const btnA = document.getElementById('preview-a');
+            const btnB = document.getElementById('preview-b');
+            if (btnA && btnB) {
+                btnA.addEventListener('click', () => {
+                    badges.forEach(b => { b.classList.remove('variant-b'); b.classList.add('variant-a'); });
+                });
+                btnB.addEventListener('click', () => {
+                    badges.forEach(b => { b.classList.remove('variant-a'); b.classList.add('variant-b'); });
+                });
+            }
+        });
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Style for Glow Blobs & Scroll Animation -->
+    <style>
+        /* Smooth Custom Blob Animation */
+        @keyframes float-blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-float-1 {
+            animation: float-blob 15s infinite ease-in-out;
+        }
+        .animate-float-2 {
+            animation: float-blob 20s infinite ease-in-out 2s;
+        }
+        .animate-float-3 {
+            animation: float-blob 18s infinite ease-in-out 4s;
+        }
+
+        /* Technical Grid Pattern Background */
+        .tech-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(148, 163, 184, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+        }
+
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Reveal on Scroll class */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-up.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom glow text */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 160, 233, 0.15);
+        }
+
+        /* Social badge styles */
+        .social-badge {
+            --brand: #00A0E9;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            color: #757575; /* neutral default */
+            border: 1px solid rgba(16,24,40,0.06);
+            background: #fff;
+            text-decoration: none;
+            transition: transform .18s ease, color .18s ease, box-shadow .18s ease, border-color .18s ease;
+        }
+        .social-badge svg { flex: 0 0 auto; transition: transform .2s ease; }
+        .social-badge svg circle { stroke: currentColor; stroke-width: 1.6; fill: transparent; }
+        .social-badge svg text { fill: currentColor; font-weight:700; font-family: Inter, Arial, sans-serif; }
+        .social-badge .label { font-size: 0.9rem; font-weight: 600; color: inherit; }
+        .social-badge:hover { transform: translateY(-4px); color: var(--brand); box-shadow: 0 10px 24px rgba(2,6,23,0.06); border-color: rgba(2,6,23,0.08); }
+        .social-badge:focus { outline: 3px solid rgba(0,160,233,0.18); outline-offset: 3px; }
+
+        /* Preview variants */
+        .social-badge.variant-a { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(2,6,23,0.04); }
+        .social-badge.variant-a .label { font-size: 0.9rem; }
+
+        .social-badge.variant-b { transform: translateY(-6px); box-shadow: 0 14px 36px rgba(2,6,23,0.08); }
+        .social-badge.variant-b .label { font-size: 1rem; }
+    </style>
+</head>
+<body class="bg-[#fafbfe] text-slate-800 font-sans selection:bg-techBlue/10 selection:text-techBlue overflow-x-hidden">
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- 動態科技背景 (WHITE TECH BACKGROUND WITH FLOATING GLOWS) -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <div class="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
+        <div class="absolute inset-0 tech-grid [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_60%,transparent_100%)] opacity-85"></div>
+        
+        <!-- Interactive gradient blurred circles for luxury aesthetic -->
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-blue-100/40 rounded-full filter blur-[120px] animate-float-1"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] bg-purple-100/30 rounded-full filter blur-[100px] animate-float-2"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-[40vw] h-[40vw] bg-emerald-100/20 rounded-full filter blur-[110px] animate-float-3"></div>
+    </div>
+
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- 1. 頂部導覽列 (NAVBAR) -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <nav class="sticky top-0 z-50 w-full bg-white/70 backdrop-blur-md border-b border-slate-200/40 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-techBlue to-techPurple shadow-lg shadow-techBlue/10">
+                        <span class="text-white font-extrabold text-lg">K</span>
+                        <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-techGreen border-2 border-white rounded-full animate-ping"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-slate-900 font-bold tracking-tight text-lg">Kevin <span class="text-slate-400 font-normal">|</span> Avalotech</span>
+                        <span class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase">Industrial Safety Tech</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <div class="hidden md:flex items-center gap-8 font-medium text-slate-600 text-sm">
+                    <a href="#hero" class="hover:text-techBlue transition-colors duration-200">首頁</a>
+                    <a href="#about" class="hover:text-techBlue transition-colors duration-200">關於我</a>
+                    <a href="#services" class="hover:text-techBlue transition-colors duration-200">AI 解決方案</a>
+                    <a href="#portfolio" class="hover:text-techBlue transition-colors duration-200">實戰案例</a>
+                    <a href="#insights" class="hover:text-techBlue transition-colors duration-200">思維觀點</a>
+                    <a href="#appointment" class="hover:text-techBlue transition-colors duration-200">預約諮詢</a>
+                </div>
+
+                <!-- Right Side Status & Button -->
+                <div class="hidden lg:flex items-center gap-6">
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/50">
+                        <span class="w-2 h-2 rounded-full bg-techGreen animate-pulse"></span>
+                        <span class="text-xs font-semibold text-emerald-700 tracking-wider">Expert Status: Active</span>
+                    </div>
+                    <a href="#appointment" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-md shadow-slate-900/10 hover:shadow-lg">
+                        預約諮詢 ➔
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button (Hamburger) -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="p-2 text-slate-600 hover:text-slate-900 focus:outline-none" aria-label="Toggle Menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path id="hamburger-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute left-0 w-full bg-white/95 backdrop-blur-lg border-b border-slate-200/80 shadow-xl transition-all duration-300 px-6 py-6 space-y-4">
+            <a href="#hero" class="mobile-link block text-base font-semibold text-slate-700 hover:text-techBlue transition-colors">首頁</a>
+            <a href="#about" class="mobile-link block text-base font-semibold text-slate-700 hover:text-techBlue transition-colors">關於我</a>
+            <a href="#services" class="mobile-link block text-base font-semibold text-slate-700 hover:text-techBlue transition-colors">AI 解決方案</a>
+            <a href="#portfolio" class="mobile-link block text-base font-semibold text-slate-700 hover:text-techBlue transition-colors">實戰案例</a>
+            <a href="#insights" class="mobile-link block text-base font-semibold text-slate-700 hover:text-techBlue transition-colors">思維觀點</a>
+            <a href="#appointment" class="mobile-link block text-base font-semibold text-slate-700 hover:text-techBlue transition-colors">預約諮詢</a>
+            <div class="pt-4 border-t border-slate-100 flex flex-col gap-3">
+                <div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-100 self-start">
+                    <span class="w-2.5 h-2.5 rounded-full bg-techGreen animate-pulse"></span>
+                    <span class="text-xs font-semibold text-emerald-700">Expert Status: Active</span>
+                </div>
+                <a href="#appointment" class="mobile-link w-full text-center py-3 rounded-xl bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition-colors">
+                    即刻安排 1-on-1 諮詢
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- 2. 首頁 HERO 區塊 -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <section id="hero" class="relative min-h-[calc(100vh-80px)] flex items-center justify-center pt-10 pb-20 px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto text-center z-10">
+            
+            <!-- Tech Badge -->
+            <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-blue-50/80 to-purple-50/80 border border-blue-100/50 backdrop-blur-sm shadow-sm mb-8 reveal-up">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-techBlue opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-techBlue"></span>
+                </span>
+                <span class="text-xs font-semibold text-slate-600 tracking-wider uppercase">Next-Gen Industrial Safety Infrastructure</span>
+            </div>
+
+            <!-- Typewriter Main Title -->
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.15] reveal-up" style="transition-delay: 100ms;">
+                <span class="block text-slate-800 font-medium text-2xl sm:text-3xl lg:text-4xl mb-4 tracking-normal">工安管理的終極轉型宣告</span>
+                <span id="typewriter" class="inline-block bg-gradient-to-r from-techBlue via-techPurple to-slate-900 bg-clip-text text-transparent min-h-[1.5em] glow-text"></span><span class="text-techPurple font-light inline-block animate-pulse-slow">|</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="max-w-2xl mx-auto text-lg sm:text-xl text-slate-500 font-normal leading-relaxed mb-12 reveal-up" style="transition-delay: 200ms;">
+                跨越 <span class="text-slate-800 font-semibold underline decoration-techBlue decoration-2">IT</span>、<span class="text-slate-800 font-semibold underline decoration-techPurple decoration-2">OT</span> 與 <span class="text-slate-800 font-semibold underline decoration-techGreen decoration-2">AI</span> 的工業安全科技實務專家，為全球領先企業打造可持續擴展的安全數位未來。
+            </p>
+
+            <!-- Interactive Transformative CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5 reveal-up" style="transition-delay: 300ms;">
+                
+                <!-- The Smart Interactive Button -->
+                <button id="interactive-cta-btn" onclick="document.getElementById('appointment').scrollIntoView({behavior: 'smooth'})" class="relative group px-10 py-5 rounded-2xl font-bold tracking-wide transition-all duration-500 flex items-center justify-center min-w-[290px] border-2 border-transparent bg-clip-padding" style="background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(135deg, #00A0E9, #6F63C6); background-origin: border-box; color: #00A0E9; box-shadow: 0 10px 25px -5px rgba(0,160,233,0.15);">
+                    <span id="cta-btn-text" class="flex items-center gap-3 transition-all duration-300">
+                        探索安全數位未來
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
+                        </svg>
+                    </span>
+                </button>
+
+                <a href="#about" class="px-8 py-5 rounded-2xl text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/60 border border-slate-200/50 backdrop-blur-sm transition-all duration-300">
+                    認識顧問資歷
+                </a>
+            </div>
+
+            <!-- Client logos / Trust elements -->
+            <div class="mt-20 pt-10 border-t border-slate-200/40 max-w-4xl mx-auto reveal-up" style="transition-delay: 400ms;">
+                <p class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">TRUSTED BY INDUSTRY LEADERS IN VARIOUS DOMAINS</p>
+                <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                    <span class="text-sm font-extrabold tracking-widest text-slate-600">SEMICONDUCTOR</span>
+                    <span class="text-sm font-extrabold tracking-widest text-slate-600">PETROCHEMICAL</span>
+                    <span class="text-sm font-extrabold tracking-widest text-slate-600">ENERGY CORP</span>
+                    <span class="text-sm font-extrabold tracking-widest text-slate-600">SMART LOGISTICS</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- 3. 關於我區塊 (ABOUT KEVIN) -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <section id="about" class="py-24 lg:py-32 border-t border-slate-200/20 bg-white/40 backdrop-blur-3xl">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-start">
+                
+                <!-- Left: Biography and Core Advantages -->
+                <div class="lg:col-span-7 space-y-10 reveal-up">
+                    <div class="space-y-4">
+                        <div class="text-xs font-extrabold text-techBlue tracking-widest uppercase flex items-center gap-2">
+                            <span class="w-6 h-[2px] bg-techBlue inline-block"></span>
+                            Senior Industry Advisor
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                            跨足自動化與資安領域，<br class="hidden sm:inline">以「數據」重新定義工業安全。
+                        </h2>
+                    </div>
+
+                    <div class="space-y-6 text-slate-600 leading-relaxed text-base sm:text-lg">
+                        <p>
+                            Kevin 為 <strong class="text-slate-900 font-semibold">Avalotech Co., Ltd. 專業顧問與技術實務專家</strong>，擁有超過 <strong class="text-techBlue font-bold">20 年</strong> 跨領域產業經驗。長期深耕於工業自動化、工業安全、資料科學與人工智慧應用等核心技術領域。
+                        </p>
+                        <p>
+                            專注於協助企業推動智慧化升級與數位轉型，具備從技術規劃、系統整合到實際落地導入的完整實戰經驗。他擅長跨部門協作與技術溝通，能夠有效整合 <strong class="text-slate-900 font-semibold">IT (資訊技術)、OT (營運技術) 與 AI 架構</strong>，協助企業在兼顧安全、效率與穩定性的前提下，加速智慧化與自動化發展。
+                        </p>
+                    </div>
+
+                    <!-- Core Value Pills -->
+                    <div class="space-y-4 pt-4">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-widest">核心優勢與關鍵價值</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100/60 shadow-sm">
+                                ⚡️ IT/OT/AI 高效整合
+                            </span>
+                            <span class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-100/60 shadow-sm">
+                                📊 實務落地與商業價值
+                            </span>
+                            <span class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100/60 shadow-sm">
+                                🛡️ 主動式風險預測控制
+                            </span>
+                            <span class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-semibold bg-slate-50 text-slate-700 border border-slate-200/60 shadow-sm">
+                                🤝 跨部門架構溝通橋樑
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Domain Tags -->
+                    <div class="space-y-4 pt-2">
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">服務產業領域 Expert Areas</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600">先進半導體製造</span>
+                            <span class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600">重化工與製程工程</span>
+                            <span class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600">高可靠度金融安防</span>
+                            <span class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600">智慧醫療設備合規</span>
+                            <span class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600">科技服務與雲端架構</span>
+                            <span class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600">高等教育與安全演練</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Massive Data & Certification Grid Cards -->
+                <div class="lg:col-span-5 space-y-6 reveal-up" style="transition-delay: 200ms;">
+                    
+                    <!-- Card 1: 20+ Years -->
+                    <div class="p-8 rounded-2xl bg-white border border-slate-200/50 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute right-0 top-0 translate-x-4 -translate-y-4 w-32 h-32 bg-blue-50 rounded-full -z-10 group-hover:scale-110 transition-transform duration-500"></div>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-6xl font-extrabold text-slate-900 tracking-tight bg-gradient-to-r from-techBlue to-techPurple bg-clip-text text-transparent">20+</span>
+                            <span class="text-lg font-bold text-slate-500">年</span>
+                        </div>
+                        <p class="text-slate-800 font-bold mt-2">跨領域產業深耕資歷</p>
+                        <p class="text-slate-500 text-xs mt-1">從硬體自控、製程安全，到結合 AI 進行風險預警與數位轉型。</p>
+                    </div>
+
+                    <!-- Card 2: Certifications -->
+                    <div class="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 text-white shadow-xl shadow-slate-950/20 relative overflow-hidden">
+                        <!-- Abstract glow line inside dark card -->
+                        <div class="absolute -bottom-1/2 -right-1/4 w-80 h-80 bg-techPurple/20 rounded-full filter blur-3xl"></div>
+                        
+                        <div class="text-xs font-bold text-techGreen tracking-widest uppercase mb-4">Core Certifications</div>
+                        <h3 class="text-xl font-bold tracking-tight text-white mb-6">4 大核心國際專業證照</h3>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- Cert 1 -->
+                            <div class="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
+                                <div class="text-techBlue font-extrabold text-base tracking-wider mb-1">CISSP</div>
+                                <div class="text-[11px] text-slate-400 font-semibold">資訊安全系統專業</div>
+                            </div>
+                            <!-- Cert 2 -->
+                            <div class="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
+                                <div class="text-techPurple font-extrabold text-base tracking-wider mb-1">RHCE</div>
+                                <div class="text-[11px] text-slate-400 font-semibold">紅帽系統架構工程師</div>
+                            </div>
+                            <!-- Cert 3 -->
+                            <div class="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
+                                <div class="text-emerald-400 font-extrabold text-base tracking-wider mb-1">CEH</div>
+                                <div class="text-[11px] text-slate-400 font-semibold">道德駭客防禦認證</div>
+                            </div>
+                            <!-- Cert 4 -->
+                            <div class="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
+                                <div class="text-amber-400 font-extrabold text-base tracking-wider mb-1">ISO 27001</div>
+                                <div class="text-[11px] text-slate-400 font-semibold">資安管理系統主導稽核員</div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-5 border-t border-white/10 flex items-center justify-between">
+                            <span class="text-xs text-slate-400">Governance, Security & Architecture</span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-techGreen animate-pulse"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- 4. 服務項目與 AI 解決方案區塊 (SERVICES & SOLUTIONS) -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <section id="services" class="py-24 lg:py-32 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="max-w-3xl mx-auto text-center mb-20 space-y-4 reveal-up">
+                <div class="text-xs font-extrabold text-techPurple tracking-widest uppercase flex items-center justify-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-techPurple"></span>
+                    Solutions & Services
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+                    全方位安全諮詢與 AI 科技解決方案
+                </h2>
+                <p class="text-slate-500 text-base sm:text-lg">
+                    融合二十年現場實戰經驗與前沿人工智慧，為您構建涵蓋人身安全、設備安全與數據資安的防禦矩陣。
+                </p>
+            </div>
+
+            <!-- Services Grid (9 cards) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1: 安全制度建構 -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-200/50 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-up">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-techBlue flex items-center justify-center mb-6 group-hover:bg-techBlue group-hover:text-white transition-all duration-300">
+                            <!-- SVG: SOP Shield -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">01. 安全制度建構</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            建立與維護工業安全衛生管理制度，根據企業特質制定安全作業標準程序（SOP），並實施持續優化流程，將法規轉化為日常穩健防線。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-techBlue/50 mt-6 block uppercase group-hover:text-techBlue transition-all">SOP Framework ➔</span>
+                </div>
+
+                <!-- Card 2: 風險危害評估 -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-200/50 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-up" style="transition-delay: 50ms;">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-techBlue flex items-center justify-center mb-6 group-hover:bg-techBlue group-hover:text-white transition-all duration-300">
+                            <!-- SVG: Risk Graph -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">02. 風險危害評估</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            針對製程與複雜作業環境執行全面風險評估（Risk Assessment）。精準識別隱蔽危害，提出最具商業可行性的工程改善與控制對策。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-techBlue/50 mt-6 block uppercase group-hover:text-techBlue transition-all">Risk Assessment ➔</span>
+                </div>
+
+                <!-- Card 3: 國際合規管理 -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-200/50 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-up" style="transition-delay: 100ms;">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-techBlue flex items-center justify-center mb-6 group-hover:bg-techBlue group-hover:text-white transition-all duration-300">
+                            <!-- SVG: ISO Compliance -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">03. 國際合規管理</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            對標國家環安法規及國際 ISO 45001 職業安全衛生標準。確保廠區運作流程與資產皆符合國際高規格合規管理。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-techBlue/50 mt-6 block uppercase group-hover:text-techBlue transition-all">ISO 45001 Standard ➔</span>
+                </div>
+
+                <!-- Card 4: 現場稽核追蹤 -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-200/50 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-up" style="transition-delay: 150ms;">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-techBlue flex items-center justify-center mb-6 group-hover:bg-techBlue group-hover:text-white transition-all duration-300">
+                            <!-- SVG: Magnifier Audit -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">04. 現場稽核追蹤</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            主導現場安全巡檢與內部系統稽核。全流程追蹤不合規事項，落實防呆控制措施，徹底消除執行面上的死角。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-techBlue/50 mt-6 block uppercase group-hover:text-techBlue transition-all">Audit & Tracking ➔</span>
+                </div>
+
+                <!-- Card 5: 應變教育訓練 -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-200/50 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-up" style="transition-delay: 200ms;">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-techBlue flex items-center justify-center mb-6 group-hover:bg-techBlue group-hover:text-white transition-all duration-300">
+                            <!-- SVG: Academy -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">05. 應變教育訓練</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            規劃高感官、互動式的安全衛生訓練課程。建立高層與現場第一線人員的安全共識，極大化提升團隊的風險預警意識。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-techBlue/50 mt-6 block uppercase group-hover:text-techBlue transition-all">Training Programs ➔</span>
+                </div>
+
+                <!-- Card 6: 事故根因分析 -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-200/50 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-up" style="transition-delay: 250ms;">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-techBlue flex items-center justify-center mb-6 group-hover:bg-techBlue group-hover:text-white transition-all duration-300">
+                            <!-- SVG: RCA Root Analysis -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">06. 事故根因分析</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            運用系統化工程思維（如五問法、魚骨圖）執行工安事故調查與根因分析（RCA）。協助企業挖掘結構性漏洞，阻斷事故再次發生。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-techBlue/50 mt-6 block uppercase group-hover:text-techBlue transition-all">Root Cause Analysis ➔</span>
+                </div>
+
+                <!-- Card 7: 新建設備審查 -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-200/50 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-up" style="transition-delay: 300ms;">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-techBlue flex items-center justify-center mb-6 group-hover:bg-techBlue group-hover:text-white transition-all duration-300">
+                            <!-- SVG: Hardware Review -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">07. 新建設備審查</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            在設計與規劃階段提前介入。提供全面的設備、製程與空間安全審查，防止有缺陷的資產流入生產線。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-techBlue/50 mt-6 block uppercase group-hover:text-techBlue transition-all">Procurement Gate ➔</span>
+                </div>
+
+                <!-- Card 8: 緊急應變演練 -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-200/50 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-up" style="transition-delay: 350ms;">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-techBlue flex items-center justify-center mb-6 group-hover:bg-techBlue group-hover:text-white transition-all duration-300">
+                            <!-- SVG: ERP Emergency -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-3">08. 緊急應變演練</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            設計高擬真度的緊急應變計畫（ERP）與實兵演練（Drill），將危機應對肌肉記憶化，保全重大天然災害或人為事故下的生命。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-techBlue/50 mt-6 block uppercase group-hover:text-techBlue transition-all">Emergency Preparedness ➔</span>
+                </div>
+
+                <!-- Card 9: AI 數據安全優化 (HIGHLIGHTED FUTURE CORE) -->
+                <div class="relative group p-[2px] rounded-2xl bg-gradient-to-tr from-techBlue via-techPurple to-techGreen shadow-lg shadow-techPurple/10 hover:shadow-2xl hover:shadow-techPurple/20 hover:-translate-y-2 transition-all duration-300 reveal-up" style="transition-delay: 400ms;">
+                    <div class="h-full w-full bg-white rounded-[14px] p-8 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-techBlue to-techPurple text-white flex items-center justify-center">
+                                    <!-- SVG: Brain/AI -->
+                                    <svg class="w-6 h-6 animate-pulse" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                    </svg>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest bg-techPurple/10 text-techPurple uppercase">
+                                    Next Gen Tech
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3 bg-gradient-to-r from-techBlue to-techPurple bg-clip-text text-transparent">09. AI 數據安全優化</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed font-medium">
+                                結合先進邊緣運算（Edge AI）與大語言模型（LLM），優化現場安全監控效率。打造動態預警系統，將事後被動調查轉型為事前主動阻斷。
+                            </p>
+                        </div>
+                        <span class="text-xs font-extrabold text-techPurple mt-6 block uppercase tracking-wider">
+                            Explore Intelligent Safety ➔
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- 5. 精選案例與技術部落格 (PORTFOLIO & INSIGHTS) -->
+    <!-- -------------------------------------------------------------------------------- -->
+    
+    <!-- SECTION 5-A: PORTFOLIO -->
+    <section id="portfolio" class="py-24 lg:py-32 bg-slate-50/50 border-t border-b border-slate-200/40">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            
+            <div class="max-w-3xl mx-auto text-center mb-16 space-y-3 reveal-up">
+                <div class="text-xs font-extrabold text-techBlue tracking-widest uppercase flex items-center justify-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-techBlue"></span>
+                    Proven Track Records
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    數位實戰：成功落地的關鍵案例
+                </h2>
+                <p class="text-slate-500 text-sm sm:text-base">
+                    Kevin 長期受託於頂尖科技製造、重化工程企業，以下為部分具有里程碑意義的高階整合專案。
+                </p>
+            </div>
+
+            <!-- Case Study Columns -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Case 1 -->
+                <div class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col justify-between h-full reveal-up">
+                    <div>
+                        <div class="p-6 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-techBlue bg-blue-50 px-2.5 py-1 rounded">Semiconductor</span>
+                            <span class="text-xs font-semibold text-slate-400">高雄/新竹廠區</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-lg font-bold text-slate-900 group-hover:text-techBlue">大型半導體廠 OT 安全系統整合</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">
+                                針對先進晶圓製造廠進行 IT-OT 架構隔離與合規重建，統合 ISO 27001 與 SEC-001 安全標準，整合現場 3,000+ 臺自動化機臺的數據通訊安全，將安全死角率降至 0%。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-slate-100/50 mt-4 flex items-center justify-between">
+                        <span class="text-xs text-slate-400">成果：降低 40% 人為設定隱患</span>
+                        <span class="text-sm font-semibold text-techBlue">Case Profile →</span>
+                    </div>
+                </div>
+
+                <!-- Case 2 -->
+                <div class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col justify-between h-full reveal-up" style="transition-delay: 100ms;">
+                    <div>
+                        <div class="p-6 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-techPurple bg-purple-50 px-2.5 py-1 rounded">AI Prediction</span>
+                            <span class="text-xs font-semibold text-slate-400">石化工業園區</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-lg font-bold text-slate-900">化工製程 AI 風險預警系統落地</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">
+                                引進基於時序深度學習架構的 AI 引擎，對危險化工反應槽實施邊緣運算監測。分析熱度與異常震動，將關鍵危害的預警提前時間由原先 1.5 分鐘拉長至 12 分鐘，大幅增強應變餘裕。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-slate-100/50 mt-4 flex items-center justify-between">
+                        <span class="text-xs text-slate-400">成果：製程無預警停機次數減少 65%</span>
+                        <span class="text-sm font-semibold text-techPurple">Case Profile →</span>
+                    </div>
+                </div>
+
+                <!-- Case 3 -->
+                <div class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col justify-between h-full reveal-up" style="transition-delay: 200ms;">
+                    <div>
+                        <div class="p-6 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+                            <span class="text-xs font-bold text-techGreen bg-emerald-50 px-2.5 py-1 rounded">Smart Logistics</span>
+                            <span class="text-xs font-semibold text-slate-400">跨國物流總倉</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-lg font-bold text-slate-900">智慧物流中心大數據安防規劃</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">
+                                為全自動化揀貨倉重構安全網絡。部署電腦視覺（Computer Vision）演練，自動探查操作人員與機械手臂之安全間隙，以微型物聯網控制機制即時觸發減速防撞，落實高度人機協作。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-slate-100/50 mt-4 flex items-center justify-between">
+                        <span class="text-xs text-slate-400">成果：人機碰撞風險近乎歸零</span>
+                        <span class="text-sm font-semibold text-techGreen">Case Profile →</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5-B: BLOG INSIGHTS -->
+    <section id="insights" class="py-24 lg:py-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-16 gap-4 reveal-up">
+                <div class="space-y-3">
+                    <div class="text-xs font-extrabold text-techPurple tracking-widest uppercase flex items-center gap-2">
+                        <span class="w-6 h-[2px] bg-techPurple inline-block"></span>
+                        Thought Leadership
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                        數位安全實務思維與前沿探討
+                    </h2>
+                </div>
+                <p class="text-slate-500 max-w-md text-sm sm:text-base">
+                    Kevin 定期分享其於學術、實務與大型工安治理演講中所沉澱的深度洞察，掌握下一個世代的安全密鑰。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                
+                <!-- Blog Post 1 -->
+                <article class="p-8 rounded-2xl bg-white border border-slate-200/50 hover:border-slate-300 transition-all flex flex-col justify-between group reveal-up">
+                    <div class="space-y-5">
+                        <div class="flex items-center gap-4 text-xs text-slate-400 font-semibold">
+                            <span>2026.04.12</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                            <span class="text-techBlue">AI 融合工安應用</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 group-hover:text-techBlue transition-colors leading-snug">
+                            <a href="#insights">當 ISO 45001 遇上生成式 AI：工業安全的下一個十年</a>
+                        </h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            如何將原本堆疊如山的工安 SOP、法規宣告與歷年稽核文檔，灌入自定義大語言模型，打造企業內部專屬的「AI 工安特戰助理」？本文深度拆解 LLM 對現場人員進行即時合規判斷、應變決策之核心架構。
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-8 mt-6 border-t border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-700">K</div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-800">Kevin | Industrial Safety Specialist</p>
+                            <p class="text-[10px] text-slate-400">閱讀時間約 8 分鐘</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 2 -->
+                <article class="p-8 rounded-2xl bg-white border border-slate-200/50 hover:border-slate-300 transition-all flex flex-col justify-between group reveal-up" style="transition-delay: 150ms;">
+                    <div class="space-y-5">
+                        <div class="flex items-center gap-4 text-xs text-slate-400 font-semibold">
+                            <span>2026.03.20</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                            <span class="text-techPurple">零信任資安實戰</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 group-hover:text-techPurple transition-colors leading-snug">
+                            <a href="#insights">零信任架構（Zero Trust）在 OT 現場的實務實踐指南</a>
+                        </h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            老舊 PLC 控制系統在互聯網時代往往暴露出極大漏洞。本文介紹如何透過輕量化資安封裝與虛擬分段（Virtual Segmentation），對關鍵控制器實施「永不信任，始終驗證」的安全策略。
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-8 mt-6 border-t border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-700">K</div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-800">Kevin | Industrial Safety Specialist</p>
+                            <p class="text-[10px] text-slate-400">閱讀時間約 6 分鐘</p>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- 外部依賴庫（Dependencies）與聯絡表單區塊 (Social Links & Contact Form) -->
+    <!-- 插入於預約區塊之前 -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <section id="contact-deps" class="py-12 lg:py-16 bg-slate-50 border-t border-slate-200/40">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <!-- 社群 / 依賴連結 -->
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-3">多元社群與外部連結（Dependencies）</h3>
+                    <p class="text-sm text-slate-600 mb-4">快速連結至主要社群與開源資源。</p>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <div class="flex items-center gap-2 mr-2">
+                            <button id="preview-a" class="px-3 py-1 rounded-md text-sm bg-slate-100 border hidden">預覽變體 A</button>
+                            <button id="preview-b" class="px-3 py-1 rounded-md text-sm bg-white border hidden">預覽變體 B</button>
+                        </div>
+                        <a href="https://aistudy.pse.is/linemdsgroup" target="_blank" rel="noopener noreferrer" aria-label="LINE" style="--brand:#7DDE4C" class="social-badge">
+                            <!-- LINE logo (wordmark within circle) -->
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" />
+                                <rect x="7" y="8" width="10" height="6" rx="1" fill="currentColor" />
+                                <text x="12" y="12.5" text-anchor="middle" font-size="6" font-family="Inter, Arial, sans-serif" fill="#fff" font-weight="700">LINE</text>
+                            </svg>
+                            <span class="label">LINE</span>
+                        </a>
+                        <a href="https://www.facebook.com/MarketingDataScienceTMR/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="--brand:#005BAB" class="social-badge">
+                            <!-- Facebook 'f' logo -->
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" />
+                                <path d="M14.5 8.5h1.8v2.1h-1.2c-.2 0-.5.2-.5.5v1.6h1.7l-.3 2.1h-1.4V20h-2.2v-5.2H10v-2.1h1.3V9.4c0-1.3.8-2 2-2z" fill="currentColor" />
+                            </svg>
+                            <span class="label">Facebook</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/howardzhong/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="--brand:#00A0E9" class="social-badge">
+                            <!-- LinkedIn 'in' logo -->
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" />
+                                <path d="M8.5 10.5h2v7h-2v-7zm1-4a1 1 0 110 2 1 1 0 010-2zM13.5 10.5c1 0 1.6.6 1.9 1.1v.1h.1V10.5h1.8v7h-2v-3.8c0-.9 0-2-1.2-2-1.2 0-1.4.9-1.4 1.9V17h-2v-7h2v.5z" fill="currentColor" />
+                            </svg>
+                            <span class="label">LinkedIn</span>
+                        </a>
+                        <a href="https://github.com/HowardNTUST" target="_blank" rel="noopener noreferrer" aria-label="GitHub" style="--brand:#212121" class="social-badge">
+                            <!-- GitHub mark (octocat outline simplified) -->
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" />
+                                <path fill="currentColor" d="M12 .5C5.7.5.8 5.4.8 11.7c0 4.7 3 8.7 7.1 10.1.5.1.7-.2.7-.5v-1.8c-2.9.6-3.5-1.2-3.5-1.2-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6.8 2 .8.2-.7.4-1.1.8-1.4-2.3-.3-4.7-1.2-4.7-5.4 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.5.1-3 0 0 .9-.3 3 1.1a10.3 10.3 0 012.8-.4c1 0 1.9.1 2.8.4 2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.7.1 3 .7.8 1.1 1.8 1.1 3 0 4.2-2.4 5.1-4.7 5.4.4.3.8 1 .8 2v3c0 .3.2.6.8.5 4.1-1.4 7.1-5.4 7.1-10.1C23.2 5.4 18.3.5 12 .5z" />
+                            </svg>
+                            <span class="label">GitHub</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 聯絡表單（按鈕連至 Google Form） -->
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-3">填寫需求表單</h3>
+                    <p class="text-sm text-slate-600 mb-4">請說明您的專案需求、預算與時間表，我們將在 48 小時內回覆。</p>
+
+                    <form action="https://forms.gle/vZYzoTNw2Y6hcbP9A" method="get" target="_blank" class="space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input type="text" name="name" placeholder="聯絡人姓名（選填）" class="p-3 rounded-lg border border-slate-200 bg-white w-full" />
+                            <input type="email" name="email" placeholder="電子郵件（選填）" class="p-3 rounded-lg border border-slate-200 bg-white w-full" />
+                        </div>
+                        <textarea name="message" placeholder="請簡述您的需求（選填）" class="p-3 rounded-lg border border-slate-200 bg-white w-full h-28"></textarea>
+                        <div class="flex items-center gap-3">
+                            <button type="submit" class="px-6 py-3 rounded-lg bg-slate-900 text-white font-semibold">填寫需求表單</button>
+                            <a href="https://forms.gle/vZYzoTNw2Y6hcbP9A" target="_blank" rel="noopener noreferrer" class="px-4 py-3 rounded-lg border border-slate-200 text-slate-700">前往 Google Form</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- 6. 預約諮詢與聯絡區塊 (CTA & APPOINTMENT) -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <section id="appointment" class="py-24 lg:py-32 relative overflow-hidden">
+        
+        <!-- Abstract gradient overlay on background specifically for CTA -->
+        <div class="absolute inset-0 bg-gradient-to-b from-[#fafbfe] via-slate-100/50 to-[#fafbfe] -z-20"></div>
+        <div class="absolute top-[20%] left-1/2 -translate-x-1/2 w-[60vw] h-[400px] bg-gradient-to-tr from-blue-200/20 to-purple-200/20 filter blur-[120px] -z-10"></div>
+
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <div class="bg-white/60 backdrop-blur-md border border-slate-200/80 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl shadow-slate-200/50 text-center relative overflow-hidden reveal-up">
+                
+                <!-- Inner grid aesthetic -->
+                <div class="absolute inset-0 tech-grid opacity-10 -z-10"></div>
+
+                <!-- Top Accent Icon -->
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-techBlue to-techPurple text-white flex items-center justify-center mx-auto mb-8 shadow-lg shadow-techBlue/20">
+                    <svg class="w-8 h-8 animate-pulse" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-6">
+                    準備好升級您的企業安全架構了嗎？
+                </h2>
+                <p class="max-w-xl mx-auto text-slate-600 text-base sm:text-lg mb-10 leading-relaxed">
+                    無論您面臨的是老舊廠區 OT 合規升級、新型 AI 安全數據鏈建構，抑或亟需重塑高階管理防範意識，Kevin 將為您量身規劃可落地、具備實質價值的整合方案。
+                </p>
+
+                <!-- Action Appointment Area -->
+                <div class="space-y-6">
+                    <p class="text-xs font-bold text-techBlue tracking-wider uppercase">👇 立即預約 1-on-1 專業顧問諮詢</p>
+                    
+                    <div class="flex flex-col items-center justify-center gap-4">
+                        <a href="https://calendar.app.google/MKG5QvTYqNgoGNc99" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-slate-900 text-white font-bold hover:bg-slate-800 tracking-wide transition-all duration-300 shadow-xl shadow-slate-900/10 hover:shadow-2xl">
+                            預約顧問時間 ➔
+                        </a>
+                        <span class="text-xs text-slate-400">連結將跳轉至 Google Calendar 進行視訊或實體預約登記</span>
+                    </div>
+                </div>
+
+                <!-- Fast info columns -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 pt-12 mt-12 border-t border-slate-200/50 text-left">
+                    <div class="space-y-1">
+                        <p class="text-xs font-bold text-slate-400 uppercase">Consulting Mode</p>
+                        <p class="text-sm font-semibold text-slate-800">線上視訊 / 企業現場駐點</p>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-xs font-bold text-slate-400 uppercase">Response Time</p>
+                        <p class="text-sm font-semibold text-slate-800">48 小時內信件確認</p>
+                    </div>
+                    <div class="col-span-2 md:col-span-1 space-y-1">
+                        <p class="text-xs font-bold text-slate-400 uppercase">Corporate Service</p>
+                        <p class="text-sm font-semibold text-slate-800">提供正式合約與合規報告</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- 7. 頁尾 (FOOTER) -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <footer class="bg-slate-900 text-white border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12 md:py-16">
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start mb-12">
+                
+                <!-- Col 1: Brand Info -->
+                <div class="md:col-span-5 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="relative flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 text-white font-extrabold text-sm">
+                            K
+                        </div>
+                        <span class="text-white font-bold tracking-tight text-md">Kevin | Avalotech</span>
+                    </div>
+                    <p class="text-slate-400 text-sm max-w-sm leading-relaxed">
+                        提供跨越資訊技術（IT）、實體控制（OT）與人工智慧（AI）的安全技術實務顧問諮詢。深耕工業安全、系統架構防禦與先進大數據優化領域。
+                    </p>
+                    <div class="pt-4">
+                        <div class="flex items-center gap-3">
+                            <a href="https://aistudy.pse.is/linemdsgroup" target="_blank" rel="noopener noreferrer" aria-label="LINE" style="--brand:#7DDE4C" class="social-badge">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" />
+                                    <rect x="7" y="8" width="10" height="6" rx="1" fill="currentColor" />
+                                    <text x="12" y="12.5" text-anchor="middle" font-size="6" font-family="Inter, Arial, sans-serif" fill="#fff" font-weight="700">LINE</text>
+                                </svg>
+                                <span class="label text-white">LINE</span>
+                            </a>
+                            <a href="https://www.facebook.com/MarketingDataScienceTMR/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="--brand:#005BAB" class="social-badge">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" />
+                                    <path d="M14.5 8.5h1.8v2.1h-1.2c-.2 0-.5.2-.5.5v1.6h1.7l-.3 2.1h-1.4V20h-2.2v-5.2H10v-2.1h1.3V9.4c0-1.3.8-2 2-2z" fill="currentColor" />
+                                </svg>
+                                <span class="label text-white">Facebook</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/howardzhong/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="--brand:#00A0E9" class="social-badge">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" />
+                                    <path d="M8.5 10.5h2v7h-2v-7zm1-4a1 1 0 110 2 1 1 0 010-2zM13.5 10.5c1 0 1.6.6 1.9 1.1v.1h.1V10.5h1.8v7h-2v-3.8c0-.9 0-2-1.2-2-1.2 0-1.4.9-1.4 1.9V17h-2v-7h2v.5z" fill="currentColor" />
+                                </svg>
+                                <span class="label text-white">LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/HowardNTUST" target="_blank" rel="noopener noreferrer" aria-label="GitHub" style="--brand:#212121" class="social-badge">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" />
+                                    <path fill="currentColor" d="M12 .5C5.7.5.8 5.4.8 11.7c0 4.7 3 8.7 7.1 10.1.5.1.7-.2.7-.5v-1.8c-2.9.6-3.5-1.2-3.5-1.2-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6.8 2 .8.2-.7.4-1.1.8-1.4-2.3-.3-4.7-1.2-4.7-5.4 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.5.1-3 0 0 .9-.3 3 1.1a10.3 10.3 0 012.8-.4c1 0 1.9.1 2.8.4 2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.7.1 3 .7.8 1.1 1.8 1.1 3 0 4.2-2.4 5.1-4.7 5.4.4.3.8 1 .8 2v3c0 .3.2.6.8.5 4.1-1.4 7.1-5.4 7.1-10.1C23.2 5.4 18.3.5 12 .5z" />
+                                </svg>
+                                <span class="label text-white">GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation Links -->
+                <div class="md:col-span-4 grid grid-cols-2 gap-4">
+                    <div class="space-y-3">
+                        <p class="text-xs font-bold text-slate-400 tracking-wider uppercase">網頁架構</p>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li><a href="#hero" class="hover:text-white transition-colors">回到最上方</a></li>
+                            <li><a href="#about" class="hover:text-white transition-colors">資歷與證照</a></li>
+                            <li><a href="#services" class="hover:text-white transition-colors">AI 解決方案</a></li>
+                            <li><a href="#portfolio" class="hover:text-white transition-colors">實戰案例</a></li>
+                        </ul>
+                    </div>
+                    <div class="space-y-3">
+                        <p class="text-xs font-bold text-slate-400 tracking-wider uppercase">聯絡諮詢</p>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li><a href="#insights" class="hover:text-white transition-colors">思維觀點</a></li>
+                            <li><a href="#appointment" class="hover:text-white transition-colors">進行預約</a></li>
+                            <li class="text-slate-500">info@avalotech.com</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Col 3: Status Console -->
+                <div class="md:col-span-3 space-y-3">
+                    <p class="text-xs font-bold text-slate-400 tracking-wider uppercase">System Live Dashboard</p>
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-mono text-emerald-400 space-y-1.5 shadow-inner">
+                        <div class="flex items-center justify-between">
+                            <span>Status:</span>
+                            <span class="text-emerald-300">Secure Live [99.98%]</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>Integration Nodes:</span>
+                            <span class="text-slate-400">14 Active</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>AI Monitoring Engine:</span>
+                            <span class="text-slate-400">Running v4.2</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>Auth Protocol:</span>
+                            <span class="text-slate-400">TLS 1.3 | AES-256</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Copyright Line -->
+            <div class="pt-8 border-t border-slate-800 text-center flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>© 2026 Avalotech Co., Ltd. 版權所有。All Rights Reserved.</p>
+                <div class="flex gap-6">
+                    <span class="hover:text-white transition-colors">法律聲明</span>
+                    <span class="hover:text-white transition-colors">隱私權政策</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- EXTRA: 三個產品 Hero 片段（DataShield / ICS Sentinel / SafeOps Studio） -->
+    <!-- 可直接複製或取消註解至頁首作為獨立 Landing Hero 區塊 -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <div id="product-heroes" class="max-w-7xl mx-auto px-6 lg:px-8 py-20 space-y-14">
+
+        <!-- DataShield Hero -->
+        <section class="rounded-2xl p-12 bg-white border border-slate-100 shadow-md">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-3xl font-extrabold text-slate-900"><span class="text-4xl mr-2">📊</span>DataShield：讓工業安全決策從經驗走向數據驅動</h3>
+                    <p class="mt-4 text-slate-600">🔗 DataShield 將感測器資料、異常紀錄與工安事件歷史整合為一致且可查核的資料層。透過風險模型與可視化儀表板，將過往的事後調查轉化為事前預警，確保每一項安全決策皆有可追溯、量化的數據依據。</p>
+
+                    <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
+                        <li class="flex items-start gap-3"><span class="text-techBlue font-bold">📈</span> 資料整合：統一感測器、異常與事故記錄。</li>
+                        <li class="flex items-start gap-3"><span class="text-techBlue font-bold">🔮</span> 預測式風險模型：歷史+即時資料生成風險分數。</li>
+                        <li class="flex items-start gap-3"><span class="text-techBlue font-bold">📱</span> 可視化分析：即時監控與根因關聯視圖。</li>
+                        <li class="flex items-start gap-3"><span class="text-techBlue font-bold">✅</span> 可追溯合規：完整事件軌跡與決策紀錄。</li>
+                    </ul>
+
+                    <div class="mt-6 flex items-center gap-4">
+                        <a href="#appointment" class="px-6 py-3 rounded-lg bg-techBlue text-white font-semibold">📅 預約示範</a>
+                        <a href="#" class="px-6 py-3 rounded-lg border border-slate-200 text-slate-700">📥 下載產品簡介</a>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-tr from-blue-50 to-purple-50 p-8 rounded-xl">
+                    <div class="h-56 flex items-center justify-center text-center text-slate-600">儀表板與風險模型示意圖（此處可替換為實際截圖）</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ICS Sentinel Hero -->
+        <section class="rounded-2xl p-12 bg-white border border-slate-100 shadow-md">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center lg:flex-row-reverse">
+                <div>
+                    <h3 class="text-3xl font-extrabold text-slate-900"><span class="text-4xl mr-2">🛡️</span>ICS Sentinel：守護 OT 現場的 AI 安全雷達</h3>
+                    <p class="mt-4 text-slate-600">⚠️ ICS Sentinel 持續監控 OT 網路流量與設備行為，結合行為基線與 AI 偵測模型，同時偵測資安威脅與製程異常，並提供關聯化告警與回應建議，協助團隊搶得處置先機。</p>
+
+                    <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
+                        <li class="flex items-start gap-3"><span class="text-techPurple font-bold">🔌</span> 非侵入式部署：被動監控，不干擾生產。</li>
+                        <li class="flex items-start gap-3"><span class="text-techPurple font-bold">📚</span> 行為基線學習：自動建立設備正常行為。</li>
+                        <li class="flex items-start gap-3"><span class="text-techPurple font-bold">🤖</span> AI 多模型偵測：降低誤報、提升敏感度。</li>
+                        <li class="flex items-start gap-3"><span class="text-techPurple font-bold">🔗</span> 整合回應：支援 SIEM/SOAR 與票務系統。</li>
+                    </ul>
+
+                    <div class="mt-6 flex items-center gap-4">
+                        <a href="#appointment" class="px-6 py-3 rounded-lg bg-techPurple text-white font-semibold">🎬 安排演示</a>
+                        <a href="#" class="px-6 py-3 rounded-lg border border-slate-200 text-slate-700">📄 索取白皮書</a>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-tr from-purple-50 to-emerald-50 p-8 rounded-xl">
+                    <div class="h-56 flex items-center justify-center text-center text-slate-600">流量監控與行為分析示意圖（此處可替換為實際截圖）</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SafeOps Studio Hero -->
+        <section class="rounded-2xl p-12 bg-white border border-slate-100 shadow-md">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-3xl font-extrabold text-slate-900"><span class="text-4xl mr-2">📚</span>SafeOps Studio：智慧 EHS 與現場工安知識中樞</h3>
+                    <p class="mt-4 text-slate-600">🎓 SafeOps Studio 將風險評估、巡檢紀錄、訓練與事故調查集中管理，搭配 AI 文字助理與情境模擬引擎，快速產出 SOP 與教育教材，促進安全文化於每一個班別與現場操作落地。</p>
+
+                    <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
+                        <li class="flex items-start gap-3"><span class="text-techGreen font-bold">🏛️</span> 知識中心化：SOP 與調查報告集中管理。</li>
+                        <li class="flex items-start gap-3"><span class="text-techGreen font-bold">✍️</span> AI 文書助理：自動草擬報告與教材。</li>
+                        <li class="flex items-start gap-3"><span class="text-techGreen font-bold">🎭</span> 情境模擬：演練與風險驗證。</li>
+                        <li class="flex items-start gap-3"><span class="text-techGreen font-bold">📱</span> 行動化巡檢：支援離線與即時回報。</li>
+                    </ul>
+
+                    <div class="mt-6 flex items-center gap-4">
+                        <a href="#appointment" class="px-6 py-3 rounded-lg bg-techGreen text-white font-semibold">🚀 預約導覽</a>
+                        <a href="#" class="px-6 py-3 rounded-lg border border-slate-200 text-slate-700">🎁 申請 30 天試用</a>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-tr from-emerald-50 to-blue-50 p-8 rounded-xl">
+                    <div class="h-56 flex items-center justify-center text-center text-slate-600">知識中樞與巡檢介面示意圖（此處可替換為實際截圖）</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- JavaScript Logic -->
+    <!-- -------------------------------------------------------------------------------- -->
+    <script>
+        // 1. Mobile Menu Drawer Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                // Change hamburger icon to X
+                hamburgerIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            } else {
+                mobileMenu.classList.add('hidden');
+                // Change X back to hamburger
+                hamburgerIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            }
+        });
+
+        // Close mobile drawer on clicking links
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                hamburgerIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            });
+        });
+
+
+        // 2. Typewriter Effect for Hero Title
+        const txt = "Until industrial safety is engineered by data, not intuition.";
+        const speed = 40; // typing speed in milliseconds
+        let i = 0;
+
+        function typeWriter() {
+            if (i < txt.length) {
+                document.getElementById("typewriter").innerHTML += txt.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+
+        // Wait for DOM to load, then run typewriter
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(typeWriter, 500); // Small initial delay for aesthetic
+        });
+
+
+        // 3. Interactive Transformative CTA Hero Button
+        const interactiveBtn = document.getElementById('interactive-cta-btn');
+        const ctaBtnText = document.getElementById('cta-btn-text');
+
+        interactiveBtn.addEventListener('mouseenter', () => {
+            // Apply brand green glow hover state style dynamically
+            interactiveBtn.style.backgroundImage = 'linear-gradient(#ffffff, #ffffff), linear-gradient(135deg, #7DDE4C, #00B3B3)';
+            interactiveBtn.style.color = '#006644';
+            interactiveBtn.style.boxShadow = '0 15px 35px -5px rgba(125,222,76,0.35)';
+            // Dynamic text transform with fade effect
+            ctaBtnText.style.opacity = '0';
+            setTimeout(() => {
+                ctaBtnText.innerHTML = `
+                    Status: Ready to Connect ➔
+                `;
+                ctaBtnText.style.opacity = '1';
+            }, 150);
+        });
+
+        interactiveBtn.addEventListener('mouseleave', () => {
+            // Revert back to original blue-violet gradient style
+            interactiveBtn.style.backgroundImage = 'linear-gradient(#ffffff, #ffffff), linear-gradient(135deg, #00A0E9, #6F63C6)';
+            interactiveBtn.style.color = '#00A0E9';
+            interactiveBtn.style.boxShadow = '0 10px 25px -5px rgba(0,160,233,0.15)';
+            // Dynamic text revert
+            ctaBtnText.style.opacity = '0';
+            setTimeout(() => {
+                ctaBtnText.innerHTML = `
+                    探索安全數位未來
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
+                    </svg>
+                `;
+                ctaBtnText.style.opacity = '1';
+            }, 150);
+        });
+
+
+        // 4. Reveal Elements on Scroll
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target); // Trigger only once
+                }
+            });
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, {
+            root: null,
+            threshold: 0.1, // Trigger when 10% of element is visible
+            rootMargin: '0px 0px -50px 0px' // Slightly trigger early before reaching screen
+        });
+
+        const revealElements = document.querySelectorAll('.reveal-up');
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+
+
+        // 5. Navbar Box Shadow change on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md', 'bg-white/85');
+                navbar.classList.remove('bg-white/70');
+            } else {
+                navbar.classList.remove('shadow-md', 'bg-white/85');
+                navbar.classList.add('bg-white/70');
+            }
+        });
+
+    </script>
+</body>
+</html>
